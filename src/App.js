@@ -1,25 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import Weather from "./Views/WeatherView/Weather";
+import Typography from "@mui/material/Typography";
+import { WEATHER_TITILE } from "./constants/constants";
 
-function App() {
+const styles = {
+  app: { height: "100vh" },
+  title: {
+    margin: "3% 0",
+  },
+};
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App" style={styles.app}>
+      <Typography variant="h2" gutterBottom component="div" sx={styles.title}>
+        {WEATHER_TITILE}
+      </Typography>
+      <Weather />
     </div>
   );
-}
+};
 
 export default App;
