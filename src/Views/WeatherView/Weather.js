@@ -12,6 +12,9 @@ const styles = {
     justifyContent: "center",
     width: "100%",
   },
+  errorBox: {
+    width: "90%",
+  },
 };
 
 const Weather = () => {
@@ -24,7 +27,9 @@ const Weather = () => {
           );
         })
       ) : (
-        <ErrorComponent title={NO_DATA} />
+        <div style={styles.errorBox}>
+          <ErrorComponent title={NO_DATA} />
+        </div>
       )}
     </div>
   );

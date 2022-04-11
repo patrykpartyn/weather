@@ -8,7 +8,7 @@ const ErrorComponent = ({ title }) => {
   return (
     <Box
       sx={{
-        width: "90%",
+        width: "100%",
         height: "50%",
       }}
     >

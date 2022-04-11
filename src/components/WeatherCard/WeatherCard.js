@@ -47,7 +47,7 @@ const styles = {
 };
 
 const WeatherCard = ({ data, apiCall }) => {
-  const { buttonTitle, city, desc, logo } = data;
+  const { buttonTitle, city, desc, logo, details } = data;
   const [showDetails, setShowDetails] = useState(false);
   const [apiRes, setApiRes] = useState(null);
   const [apiError, setApiError] = useState(false);
@@ -100,6 +100,7 @@ const WeatherCard = ({ data, apiCall }) => {
             showDetails={showDetails}
             city={city}
             desc={desc}
+            details={details}
           />
         ) : null}
       </CardActionArea>

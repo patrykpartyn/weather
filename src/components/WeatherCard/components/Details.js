@@ -9,9 +9,12 @@ import {
   PRESSURE_LABEL,
   WEATHER_UNITS,
   PRESSURE_UNITS,
+  NO_DATA,
 } from "../../../constants/constants";
+import ErrorComponent from "../../ErrorComponent/ErrorComponent";
 import { FONT_BOLD_900 } from "../../../constants/constantsStyles";
 import PropTypes from "prop-types";
+import { DetailsOutlined } from "@mui/icons-material";
 
 const styles = {
   fontBold: {
@@ -19,45 +22,54 @@ const styles = {
   },
 };
 
-const Details = ({ data, showDetails, desc }) => {
-  const { name, main, wind } = data;
+const Details = ({ data, showDetails, desc, details }) => {
+  const {
+    name,
+    main: { temp },
+  } = data;
+  const calculateDegrees = (tempToCalc) =>
+    `${Math.round(tempToCalc - 273.15)}\u00b0C`;
 
-  const calculateDegrees = (temp) => `${Math.round(temp - 273.15)}\u00b0C`;
+  const calcValue = useMemo(() => calculateDegrees(temp), [temp]);
 
-  const calcValue = useMemo(() => calculateDegrees(main.temp), [main.temp]);
+  const detailWithProp = (key, weatherPropToShow) => (
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      marginTop={"8px"}
+      key={weatherPropToShow}
+    >
+      <span style={styles.fontBold}>{`${key} ${weatherPropToShow}`}:</span>{" "}
+      {weatherPropToShow === "temp" ? calcValue : data[key][weatherPropToShow]}
+    </Typography>
+  );
 
+  const detailsWithoutInnerProp = (key) => (
+    <Typography variant="body2" color="text.secondary" key={key}>
+      <span style={styles.fontBold}>{key}:</span> {data[key]}
+    </Typography>
+  );
   if (showDetails) {
     return (
       <>
         <CardContent>
-          <Typography
-            variant="body2"
-            color="text.secondary"
-            marginTop={"24px"}
-            marginBottom={"8px"}
-          >
-            <span style={styles.fontBold}>{CITY_LABEL}:</span> {name}
-          </Typography>
-          <Typography
-            variant="body2"
-            color="text.secondary"
-            marginBottom={"8px"}
-          >
-            <span style={styles.fontBold}>{DEGREES_LABEL}: </span>
-            {calcValue}
-          </Typography>
-          <Typography
-            variant="body2"
-            color="text.secondary"
-            marginBottom={"8px"}
-          >
-            <span style={styles.fontBold}> {WIND_LABEL}:</span> {wind.speed}{" "}
-            {WEATHER_UNITS}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            <span style={styles.fontBold}> {PRESSURE_LABEL}: </span>
-            {main.pressure} {PRESSURE_UNITS}
-          </Typography>
+          {details.length > 0 ? (
+            details.map((config) => {
+              return Object.keys(config).map((key) => {
+                if (Array.isArray(config[key])) {
+                  return config[key].map((weatherPropToShow) => {
+                    return detailWithProp(key, weatherPropToShow);
+                  });
+                } else {
+                  return detailsWithoutInnerProp(key);
+                }
+              });
+            })
+          ) : (
+            <>
+              <ErrorComponent title={NO_DATA} />
+            </>
+          )}
         </CardContent>
       </>
     );
