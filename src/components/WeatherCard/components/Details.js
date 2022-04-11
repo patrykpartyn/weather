@@ -1,20 +1,10 @@
 import React, { useMemo } from "react";
 import Typography from "@mui/material/Typography";
 import CardContent from "@mui/material/CardContent";
-import {
-  CITY_DESC_LABEL,
-  CITY_LABEL,
-  DEGREES_LABEL,
-  WIND_LABEL,
-  PRESSURE_LABEL,
-  WEATHER_UNITS,
-  PRESSURE_UNITS,
-  NO_DATA,
-} from "../../../constants/constants";
+import { CITY_DESC_LABEL, NO_DATA } from "../../../constants/constants";
 import ErrorComponent from "../../ErrorComponent/ErrorComponent";
 import { FONT_BOLD_900 } from "../../../constants/constantsStyles";
 import PropTypes from "prop-types";
-import { DetailsOutlined } from "@mui/icons-material";
 
 const styles = {
   fontBold: {
